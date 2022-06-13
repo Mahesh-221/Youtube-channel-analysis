@@ -1,7 +1,7 @@
 ## Youtube-channel-analysis
 
 In this project, I've done an analysis of a very popular finance youtube channel named [Akshat Shrivastava](https://www.youtube.com/c/AkshatShrivastavaZayn).
-The data i used is available publicly which can be requested from Youtube API.
+The data i used is publicly available which can be requested from Youtube API.
 
 ### 📋Final Report [Link](https://docs.google.com/spreadsheets/d/1sp23G8R4sF_uIPrUmx8nvMNMBof-tfd7roP70mgcDgY/edit?usp=sharing)
 

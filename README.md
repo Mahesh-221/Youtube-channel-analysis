@@ -18,7 +18,7 @@ WebApp link: https://yt-channel-analysis.herokuapp.com/
 4. Creatig the WebApp using streamlit
 5. Deploying on Heroku Cloud
 
-<h2 align="center">💻 Landing Page </h2> 
+<h2 align="center">💻 Landing Page (Demo) </h2> 
 <p align="center">
  <img src="https://github.com/Mahesh-221/Youtube-channel-analysis/blob/main/App_LandingPage.jpg?raw=true" width="800"/>
 </p>

@@ -6,7 +6,7 @@ To Create Youtube API Key, Refer to Thu Vu's video from the link below (Timestam
 
 WebApp link: https://yt-channel-analysis.herokuapp.com/
 
-References:
+### References:
 1. [Thu vu](https://youtu.be/D56_Cx36oGY) for doing the project in Python
 2. [Tyler](https://github.com/tylerjrichards/streamlit_goodreads_app) for making the WebApp
 3. [M Khorasani](https://towardsdatascience.com/creating-an-interactive-datetime-filter-with-pandas-and-streamlit-156e1ea12e90) for creating Date Slider in the App

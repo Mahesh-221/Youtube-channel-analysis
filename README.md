@@ -19,5 +19,5 @@ References:
 
 <h2 align="center">📊 Sample Report </h2> 
 <p align="center">
- <img src="https://github.com/Mahesh-221/Youtube-channel-analysis/blob/main/Wordcloud_Title.jpg?raw=true" width="800"/>
+ <img src="https://github.com/Mahesh-221/Youtube-channel-analysis/blob/main/App_LandingPage.jpg?raw=true" width="800"/>
 </p>

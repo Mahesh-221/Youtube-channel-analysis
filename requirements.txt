@@ -1,0 +1,14 @@
+streamlit
+requests
+PIL
+streamlit_lottie
+numpy
+pandas
+seaborn
+matplotlib
+isodate
+DateTime
+IPython
+googleapiclient
+nltk
+wordcloud

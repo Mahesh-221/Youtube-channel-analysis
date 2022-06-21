@@ -1,8 +1,8 @@
 ## Youtube-channel-analysis
 
 In this project, I've created a webapp using streamlit library, which can be used by any youtuber to analyse their channel. All they need to enter is their API key and Channel ID.
-To Create Youtube API Key, Refer to Thu Vu's video from the link below (Timestamp: 1:11 to 3:30)
-Check out the master branch for the code.
+To Create Youtube API Key, Refer to Thu Vu's video from the link below (Timestamp: 1:11 to 3:30).
+*Check out the master branch for the code.*
 
 WebApp link: https://yt-channel-analysis.herokuapp.com/
 

@@ -1,16 +1,21 @@
 ## Youtube-channel-analysis
 
-In this project, I've done an analysis of a very popular finance youtube channel named [Akshat Shrivastava](https://www.youtube.com/c/AkshatShrivastavaZayn).
-The data i used is publicly available which can be requested from Youtube API.
+In this project, I've created a webapp using streamlit library, which can be used by any youtuber to analyse their channel. All they need to enter is their API key and Channel ID.
+To Create Youtube API Key, Refer to Thu Vu's video from the link below (Timestamp: 1:11 to 3:30)
 
-### 📋Final Report [Link](https://docs.google.com/spreadsheets/d/1sp23G8R4sF_uIPrUmx8nvMNMBof-tfd7roP70mgcDgY/edit?usp=sharing)
+WebApp link: 
 
-Note: Major part of the project is done in reference to a youtube video by [Thu vu](https://youtu.be/D56_Cx36oGY)
+References:
+1. [Thu vu](https://youtu.be/D56_Cx36oGY) for doing the project in Python
+2. [Tyler](https://github.com/tylerjrichards/streamlit_goodreads_app) for making the WebApp
+3. [M Khorasani](https://towardsdatascience.com/creating-an-interactive-datetime-filter-with-pandas-and-streamlit-156e1ea12e90) for creating Date Slider in the App
 
 ### Steps: 
-1. Get the data from youtube API
-2. Data Cleaning & Feature Engineering
-3. Data Analysis 
+1. Data Extraction from youtube API
+2. Data Cleaning & Feature Engineering 
+3. Data Analysis in Python
+4. Creatig the WebApp using streamlit
+5. Deploying on Heroku Cloud
 
 <h2 align="center">📊 Sample Report </h2> 
 <p align="center">

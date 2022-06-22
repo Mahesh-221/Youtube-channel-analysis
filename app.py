@@ -48,7 +48,7 @@ row0_spacer1, row0_1, row0_spacer2, row0_2, row0_spacer3 = st.columns((.1, 2, .2
 row0_1.title('Analyze Your YouTube Channel')
 with row0_2:
     st.write('')
-row0_2.subheader('A Streamlit web app by [Mahesh](http://Mahesh.Popsy.Site). DM me on [Twitter](https://twitter.com/Mahesh_221)')
+row0_2.subheader('A Streamlit Webapp by [Mahesh](http://Mahesh.Popsy.Site). Reach out to me on [Twitter](https://twitter.com/Mahesh_221)')
 
 # ---- Row 1 ----
 
@@ -64,10 +64,10 @@ with row1_1:
 row2_spacer1, row2_1, row2_spacer2, row2_2, row2_spacer3 = st.columns((.1, 0.7, .1, 0.7, .1))
 
 with row2_1:
-    api_key = st.text_input('Enter your Youtube API Key', max_chars=39)
+    api = st.text_input('Enter your Youtube API Key', max_chars=39)
 
 with row2_2:
-    Channel_Id = st.text_input('Enter your Youtube Channel Id', max_chars=24)
+    C_Id = st.text_input('Enter your Youtube Channel Id', max_chars=24)
 
 # ---- Row 3 ----
 
@@ -76,11 +76,24 @@ row3_spacer1, row3_1, row3_spacer2 = st.columns((2, 1.3, 1))
 with row3_1:
     Submit = st.button('Analyze')
 
+# ---- App pause ----
+
+Api_Key = api
+if not Api_Key:
+    st.warning('Please Enter Your API Key')
+    st.stop()
+else: pass
+
+Channel_ID = C_Id
+if not Channel_ID:
+    st.warning('Please Enter Your Channel ID')
+    st.stop()
+
 
 # ---- API Call ----
 
-api_key = str(api_key)
-channel_id = str(Channel_Id)
+api_key = str(Api_Key)
+channel_id = str(Channel_ID)
 
 api_service_name = "youtube"
 api_version = "v3"
@@ -248,21 +261,44 @@ rows_space1, rows_1, rows_space2 = st.columns((.1,3.2,.1))
 
 def df_filter(message,df):
 
-        slider_1, slider_2 = st.slider('%s' % (message),0,len(df)-1,[0,len(df)-1],1)
+        df = pd.DataFrame(df.sort_values(by='published_date').to_numpy(), index=df.index, columns=df.columns)
+        df['viewCount'] = df['viewCount'].astype(int)
+        df['likeCount'] = df['likeCount'].astype(int)
+        df['commentCount'] = df['commentCount'].astype(int)
+        df['duration_secs'] = df['duration_secs'].astype(int)
+        df['day_of_week'] = df['day_of_week'].astype(int)
+        df['published_in_hr'] = df['published_in_hr'].astype(int)
+        df['publishedhr_in_IST'] = df['publishedhr_in_IST'].astype(int)
+        
+        slider_1, slider_2 = st.slider('%s' % (message),0,len(df)-1,[0,len(df)-1],1) 
 
-        s_date = str(df.iloc[slider_2,12]).replace('00:00:00','')
+        s_date = str(df.iloc[slider_1,12]).replace('00:00:00','')
         start_date = s_date.strip()
-        e_date = str(df.iloc[slider_1,12]).replace('00:00:00','')
+        e_date = str(df.iloc[slider_2,12]).replace('00:00:00','')
         end_date = e_date.strip()
         
-        st.info('Start Date: **{}** ,    End Date: **{}**' .format(start_date,end_date))
+        st.info('From: **{}**    To: **{}**' .format(start_date,end_date))
         
         df = df.iloc[slider_1:slider_2+1][:].reset_index(drop=True)
-
+        
         return df
 
 with rows_1:
-    df = df_filter('Move sliders to filter data',df)
+    df = df_filter('Move sliders to filter data from the Oldest video (on the left) To the latest video (on the rigth)',df)
+
+
+# ---- view calculation ----
+
+if df['viewCount'].mean() > 100000 and df['viewCount'].mean() < 1000000 :
+        a = 100000
+        ex = 'L'
+elif df['viewCount'].mean() > 1000 and df['viewCount'].mean() < 100000:
+    a = 1000
+    ex = 'k'
+elif df['viewCount'].mean() > 1000000:
+    a = 1000000
+    ex = 'M'
+else: pass
 
 
 # ---- Row n ---- (n = number of videos)
@@ -301,7 +337,7 @@ with row5_1:
     ax.set_ylabel('Views')
     ax.set_xticklabels(ax.get_xticklabels(), rotation=270)
     ax.tick_params(axis='x', which='major', labelsize=9)
-    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos:'{:,.0f}'.format(x/100000) + 'L'))
+    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos:'{:,.0f}'.format(x/a) + ex ))
     st.pyplot(fig)
 
 with row5_2:
@@ -314,7 +350,7 @@ with row5_2:
     ax.set_xlabel('Title')
     ax.set_ylabel('Views')
     ax.set_xticklabels(ax.get_xticklabels(), rotation=270)
-    ax.tick_params(axis='x', which='major', labelsize=8)
+    ax.tick_params(axis='x', which='major', labelsize=9)
     ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos:'{:,.0f}'.format(x/1000) + 'k'))
     st.pyplot(fig)
     
@@ -346,7 +382,7 @@ with row6_2:
     ax.set_xlabel('Title')
     ax.set_ylabel('Likes')
     ax.set_xticklabels(ax.get_xticklabels(), rotation=270)
-    ax.tick_params(axis='x', which='major', labelsize=8)
+    ax.tick_params(axis='x', which='major', labelsize=9)
     ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos:'{:,.0f}'.format(x) ))
     st.pyplot(fig)
 
@@ -405,9 +441,9 @@ with row8_1:
     
     fig = Figure()
     ax = fig.subplots()
-    sns.violinplot(x='channelTitle', y='viewCount',data =df ,palette="viridis", ax=ax)
+    sns.violinplot(x='channelTitle', y='viewCount',data = df ,palette="viridis", ax=ax)
     ax.set_ylabel('Views')
-    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos:'{:,.0f}'.format(x/100000) + 'L' ))
+    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos:'{:,.0f}'.format(x/a) + ex ))
     st.pyplot(fig)
 
 with row8_2:
@@ -418,7 +454,7 @@ with row8_2:
     ax = fig.subplots()
     sns.boxplot(x='channelTitle', y='viewCount',data =df ,palette="flare", ax=ax)
     ax.set_ylabel('Views')
-    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos:'{:,.0f}'.format(x/100000) + 'L' ))
+    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos:'{:,.0f}'.format(x/a) + ex ))
     st.pyplot(fig)
 
 # ---- Row 9 ----
@@ -434,7 +470,7 @@ with row9_1:
     sns.scatterplot(x='likeCount', y='viewCount',data =df,hue='weekday', palette="rocket_r", ax=ax)
     ax.set_xlabel('Likes')
     ax.set_ylabel('Viewss')
-    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos:'{:,.0f}'.format(x/100000) + 'L' ))
+    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos:'{:,.0f}'.format(x/a) + ex ))
     st.pyplot(fig)
 
 with row9_2:
@@ -446,7 +482,7 @@ with row9_2:
     sns.scatterplot(x='commentCount', y='viewCount',data =df,hue='weekday', palette="flare", ax=ax)
     ax.set_xlabel('Comments')
     ax.set_ylabel('views')
-    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos:'{:,.0f}'.format(x/100000) + 'L' ))
+    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos:'{:,.0f}'.format(x/a) + ex ))
     st.pyplot(fig)
     
 # ---- Row 10 ----
@@ -462,7 +498,7 @@ with row10_1:
     sns.scatterplot(x='duration_mins', y='viewCount',data =df,hue='weekday', palette="crest", ax=ax)
     ax.set_xlabel('Duration (mins)')
     ax.set_ylabel('Views')
-    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos:'{:,.0f}'.format(x/1000000) + 'M'))
+    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos:'{:,.0f}'.format(x/a) + ex))
     st.pyplot(fig)
 
 with row10_2:
@@ -489,7 +525,7 @@ with row10a_1:
     sns.scatterplot(x='weekday', y='viewCount',data =df.sort_values('day_of_week', ascending=True) , palette="magma",hue='caption', ax=ax)
     ax.set_xlabel('Day of Week')
     ax.set_ylabel('Views')
-    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos:'{:,.0f}'.format(x/100000) + 'L' ))
+    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos:'{:,.0f}'.format(x/a) + ex ))
     st.pyplot(fig)
 
 with row10a_2:
@@ -501,7 +537,7 @@ with row10a_2:
     sns.scatterplot(x='tags_count', y='viewCount',data =df , palette="flare",hue='weekday', ax=ax)
     ax.set_xlabel('Tag Count')
     ax.set_ylabel('Views')
-    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos:'{:,.0f}'.format(x/100000) + 'L' ))
+    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos:'{:,.0f}'.format(x/a) + ex ))
     st.pyplot(fig)
 
 # ---- Row 11 ----
@@ -511,6 +547,7 @@ row11_space1, row11_1, row11_space2, row11_2, row11_space3 = st.columns((.1, 1, 
 with row11_1:
     st.subheader('Word Cloud of Title')
     
+    nltk.download('stopwords')
     stop_words = set(stopwords.words('english'))
     df['title_no_stopwords'] = df['title'].apply(lambda x: [item for item in str(x).split() if item not in stop_words])
 
@@ -530,6 +567,7 @@ with row11_1:
 
 with row11_2:
     
+    nltk.download('stopwords')
     st.subheader('Word Cloud of Tags')
     df['tags_no_stopwords'] = df['tags'].apply(lambda x: [item for item in str(x).split() if item not in stop_words])
 

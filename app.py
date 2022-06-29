@@ -198,7 +198,7 @@ df = video_df.copy()
 
 df['viewCount'] = df['viewCount'].astype(int)
 df['likeCount'] = df['likeCount'].astype(int)
-df['commentCount'] = df['commentCount'].astype(int) 
+df['commentCount'] = pd.to_numeric(df['commentCount']) 
 
 zero_views = df.index[df['viewCount'] == 0].tolist()
 df.drop(df.index[zero_views], inplace=True)
@@ -264,7 +264,7 @@ def df_filter(message,df):
         df = pd.DataFrame(df.sort_values(by='published_date').to_numpy(), index=df.index, columns=df.columns)
         df['viewCount'] = df['viewCount'].astype(int)
         df['likeCount'] = df['likeCount'].astype(int)
-        df['commentCount'] = df['commentCount'].astype(int)
+        df['commentCount'] = pd.to_numeric(df['commentCount']) 
         df['duration_secs'] = df['duration_secs'].astype(int)
         df['day_of_week'] = df['day_of_week'].astype(int)
         df['published_in_hr'] = df['published_in_hr'].astype(int)
@@ -289,10 +289,10 @@ with rows_1:
 
 # ---- view calculation ----
 
-if df['viewCount'].mean() > 100000 and df['viewCount'].mean() < 1000000 :
+if df['viewCount'].mean() > 50000 and df['viewCount'].mean() < 1000000 :
         a = 100000
         ex = 'L'
-elif df['viewCount'].mean() > 1000 and df['viewCount'].mean() < 100000:
+elif df['viewCount'].mean() > 1000 and df['viewCount'].mean() < 50000:
     a = 1000
     ex = 'k'
 elif df['viewCount'].mean() > 1000000:
@@ -351,7 +351,7 @@ with row5_2:
     ax.set_ylabel('Views')
     ax.set_xticklabels(ax.get_xticklabels(), rotation=270)
     ax.tick_params(axis='x', which='major', labelsize=9)
-    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos:'{:,.0f}'.format(x/1000) + 'k'))
+    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos:'{:,.0f}'.format(x) ))
     st.pyplot(fig)
     
 # ---- Row 6 ----

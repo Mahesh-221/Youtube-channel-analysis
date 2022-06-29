@@ -300,13 +300,33 @@ elif df['viewCount'].mean() > 1000000:
     ex = 'M'
 else: pass
 
-if df['viewCount'].min() > 1000 and df['viewCount'].min() < 10000:
-    lv = 1
-    ey = ""
-elif df['viewCount'].min() > 10000 and df['viewCount'].min() < 40000:
-    lv = 1000
-    ey = 'k'
 
+if df['viewCount'].sort_values(ascending=True)[0:3].mean() < 10000:
+    v = 1
+    e = ""
+elif df['viewCount'].sort_values(ascending=True)[0:3].mean() > 10000 and df['viewCount'].sort_values(ascending=True)[0:3].mean() < 40000:
+    v = 1000
+    e = 'k'
+elif df['viewCount'].sort_values(ascending=True)[0:3].mean() > 40000 and df['viewCount'].sort_values(ascending=True)[0:3].mean() < 500000:
+    v = 100000
+    e = 'L'
+elif df['viewCount'].min() > 500000 :
+    v = 1000000
+    e = 'M'
+else: pass
+
+if df['likeCount'].sort_values(ascending=True)[0:3].mean() < 10000:
+    l = 1
+    b = ""
+elif df['likeCount'].sort_values(ascending=True)[0:3].mean() > 10000 and df['likeCount'].sort_values(ascending=True)[0:3].mean() < 50000:
+    l = 1000
+    b = 'k'
+elif df['likeCount'].sort_values(ascending=True)[0:3].mean() > 50000 and df['likeCount'].sort_values(ascending=True)[0:3].mean() < 300000:
+    l = 100000
+    b = 'L'
+else: pass
+    
+    
 # ---- Row n ---- (n = number of videos)
 
 rown_space1, rown_1, rown_space2, rown_2, rown_space3, rown_3, rown_space4, rown_4, rown_space5 = st.columns((.1, 0.8, 0.1, 0.7 , .1, 0.5, 0.1, 0.5, .1))
@@ -357,7 +377,7 @@ with row5_2:
     ax.set_ylabel('Views')
     ax.set_xticklabels(ax.get_xticklabels(), rotation=270)
     ax.tick_params(axis='x', which='major', labelsize=9)
-    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos:'{:,.0f}'.format(x/lv) + ey ))
+    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos:'{:,.0f}'.format(x/v) + e ))
     st.pyplot(fig)
     
 # ---- Row 6 ----
@@ -389,7 +409,7 @@ with row6_2:
     ax.set_ylabel('Likes')
     ax.set_xticklabels(ax.get_xticklabels(), rotation=270)
     ax.tick_params(axis='x', which='major', labelsize=9)
-    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos:'{:,.0f}'.format(x) ))
+    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos:'{:,.0f}'.format(x/l) + b ))
     st.pyplot(fig)
 
 # ---- Row6a ----

@@ -300,6 +300,12 @@ elif df['viewCount'].mean() > 1000000:
     ex = 'M'
 else: pass
 
+if df['viewCount'].min() > 1000 and df['viewCount'].min() < 10000:
+    lv = 1
+    ey = ""
+elif df['viewCount'].min() > 10000 and df['viewCount'].min() < 40000:
+    lv = 1000
+    ey = 'k'
 
 # ---- Row n ---- (n = number of videos)
 
@@ -351,7 +357,7 @@ with row5_2:
     ax.set_ylabel('Views')
     ax.set_xticklabels(ax.get_xticklabels(), rotation=270)
     ax.tick_params(axis='x', which='major', labelsize=9)
-    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos:'{:,.0f}'.format(x) ))
+    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos:'{:,.0f}'.format(x/lv) + ey ))
     st.pyplot(fig)
     
 # ---- Row 6 ----

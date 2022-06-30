@@ -196,8 +196,8 @@ video_df = get_video_details(youtube, video_ids)
 video_df.drop('favouriteCount', axis=1, inplace=True)
 df = video_df.copy()
 
-df['viewCount'] = df['viewCount'].astype(int)
-df['likeCount'] = df['likeCount'].astype(int)
+df['viewCount'] = pd.to_numeric(df['viewCount'])
+df['likeCount'] = pd.to_numeric(df['likeCount'])
 df['commentCount'] = pd.to_numeric(df['commentCount']) 
 
 zero_views = df.index[df['viewCount'] == 0].tolist()
@@ -262,8 +262,8 @@ rows_space1, rows_1, rows_space2 = st.columns((.1,3.2,.1))
 def df_filter(message,df):
 
         df = pd.DataFrame(df.sort_values(by='published_date').to_numpy(), index=df.index, columns=df.columns)
-        df['viewCount'] = df['viewCount'].astype(int)
-        df['likeCount'] = df['likeCount'].astype(int)
+        df['viewCount'] = pd.to_numeric(df['viewCount'])
+        df['likeCount'] = pd.to_numeric(df['likeCount'])
         df['commentCount'] = pd.to_numeric(df['commentCount']) 
         df['duration_secs'] = df['duration_secs'].astype(int)
         df['day_of_week'] = df['day_of_week'].astype(int)

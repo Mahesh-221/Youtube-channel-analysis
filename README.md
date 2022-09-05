@@ -4,7 +4,8 @@ In this project, I've created a webapp using streamlit library, which can be use
 To Create Youtube API Key, Refer to Thu Vu's video from the link below (Timestamp: 1:11 to 3:30).
 *Check out the master branch for the code.*
 
-WebApp link: https://yt-channel-analysis.herokuapp.com/
+WebApp link: <a href="https://mahesh-221-youtube-channel-analysis-app-0d4vym.streamlitapp.com/"><img align="center" src="https://img.icons8.com/external-bearicons-gradient-bearicons/2x/external-App-audio-and-video-bearicons-gradient-bearicons-2.png" width="35" >
+ </a> 
 
 ### References:
 1. [Thu vu](https://youtu.be/D56_Cx36oGY) for doing the project in Python
@@ -16,7 +17,7 @@ WebApp link: https://yt-channel-analysis.herokuapp.com/
 2. Data Cleaning & Feature Engineering 
 3. Data Analysis in Python
 4. Creatig the WebApp using streamlit
-5. Deploying on Heroku Cloud
+5. Deploying on Streamlit Cloud
 
 <h2 align="center">💻 Landing Page (Demo) </h2> 
 <p align="center">
